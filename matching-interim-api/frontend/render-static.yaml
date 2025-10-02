@@ -1,0 +1,50 @@
+# frontend/render-static.yaml
+# Configuration pour servir le frontend comme site statique sur Render
+
+# Headers de sécurité et cache
+headers:
+  - path: /*
+    name: X-Frame-Options
+    value: SAMEORIGIN
+  - path: /*
+    name: X-Content-Type-Options
+    value: nosniff
+  - path: /*
+    name: X-XSS-Protection
+    value: 1; mode=block
+  - path: /*
+    name: Referrer-Policy
+    value: strict-origin-when-cross-origin
+  
+  # Cache pour assets statiques
+  - path: /css/*
+    name: Cache-Control
+    value: public, max-age=31536000, immutable
+  - path: /js/*
+    name: Cache-Control
+    value: public, max-age=31536000, immutable
+  - path: /img/*
+    name: Cache-Control
+    value: public, max-age=31536000, immutable
+  
+  # Pas de cache pour HTML
+  - path: /*.html
+    name: Cache-Control
+    value: no-cache, no-store, must-revalidate
+  - path: /
+    name: Cache-Control
+    value: no-cache, no-store, must-revalidate
+
+# Redirections
+redirects:
+  # Force HTTPS (géré automatiquement par Render)
+  - source: http://*
+    destination: https://$1
+    type: 301
+
+# Règles de routage pour SPA
+routes:
+  # Toutes les routes non-fichiers vers index.html
+  - source: /*
+    destination: /index.html
+    type: rewrite

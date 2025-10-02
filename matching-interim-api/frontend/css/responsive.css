@@ -1,0 +1,398 @@
+/* frontend/css/responsive.css */
+
+/* Tablette Portrait (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    /* Navigation mobile */
+    .main-nav {
+        transform: translateX(-100%);
+    }
+    
+    .main-nav.active {
+        transform: translateX(0);
+    }
+    
+    .nav-toggle {
+        display: block;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    /* Ajustements tablette */
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .upload-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filters-row {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    /* Tables scrollables */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .data-table {
+        min-width: 600px;
+    }
+    
+    /* Modal plein écran */
+    .modal-content {
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+}
+
+/* Mobile Large (480px - 768px) */
+@media screen and (max-width: 768px) {
+    :root {
+        --spacing-lg: 16px;
+        --spacing-xl: 24px;
+        --spacing-2xl: 32px;
+    }
+    
+    /* Page padding réduit */
+    .page {
+        padding: var(--spacing-md);
+    }
+    
+    /* Header mobile */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-actions {
+        width: 100%;
+    }
+    
+    .header-actions .btn {
+        flex: 1;
+    }
+    
+    /* Metrics en colonne unique */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Login responsive */
+    .login-card {
+        padding: var(--spacing-xl);
+        border-radius: 0;
+        height: 100vh;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .login-container {
+        padding: 0;
+    }
+    
+    /* Boutons pleine largeur */
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+    }
+    
+    /* Tables compactes */
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-small);
+    }
+    
+    /* Dropzone mobile */
+    .dropzone {
+        min-height: 150px;
+        padding: var(--spacing-lg);
+    }
+    
+    /* Filters accordion */
+    #btn-filter-toggle {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .filters-panel {
+        position: relative;
+        margin-left: calc(-1 * var(--spacing-md));
+        margin-right: calc(-1 * var(--spacing-md));
+        border-radius: 0;
+    }
+    
+    /* Results summary stack */
+    .results-summary {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    /* Modal footer stack */
+    .modal-footer {
+        flex-direction: column;
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+    }
+    
+    /* Toast mobile */
+    .toast-container {
+        left: var(--spacing-md);
+        right: var(--spacing-md);
+        top: auto;
+        bottom: var(--spacing-md);
+    }
+    
+    .toast {
+        width: 100%;
+    }
+}
+
+/* Mobile Small (320px - 480px) */
+@media screen and (max-width: 480px) {
+    :root {
+        --font-size-h1: 24px;
+        --font-size-h2: 20px;
+        --font-size-h3: 18px;
+    }
+    
+    /* Navigation mobile compacte */
+    .main-nav {
+        width: 100%;
+    }
+    
+    .nav-header {
+        padding: var(--spacing-md);
+    }
+    
+    .nav-title {
+        font-size: var(--font-size-base);
+    }
+    
+    /* Formulaires mobiles */
+    .form-group label {
+        font-size: var(--font-size-small);
+    }
+    
+    /* Metric cards compactes */
+    .metric-card {
+        padding: var(--spacing-md);
+    }
+    
+    .metric-value {
+        font-size: 28px;
+    }
+    
+    /* Sliders mobile */
+    .slider-group {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .slider::-webkit-slider-thumb {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .slider::-moz-range-thumb {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Pagination mobile */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+    
+    .pagination button {
+        min-width: 40px;
+        height: 40px;
+    }
+}
+
+/* Orientations spécifiques */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    /* Paysage mobile - réduire les hauteurs */
+    :root {
+        --button-height: 40px;
+        --input-height: 40px;
+    }
+    
+    .page-header {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .metric-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .metric-value {
+        font-size: 24px;
+    }
+}
+
+/* Tablettes spécifiques */
+
+/* iPad Portrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .main-nav {
+        width: 320px;
+    }
+    
+    .main-content.nav-open {
+        margin-left: 320px;
+    }
+}
+
+/* iPad Landscape */
+@media screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+    .metrics-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .main-nav {
+        transform: translateX(0);
+    }
+    
+    .nav-toggle {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 280px;
+    }
+}
+
+/* Touch devices specifics */
+@media (hover: none) and (pointer: coarse) {
+    /* Désactiver hover effects sur touch */
+    .btn:hover,
+    .nav-link:hover,
+    .metric-card:hover {
+        transform: none;
+    }
+    
+    /* Augmenter les zones tactiles */
+    .btn {
+        min-height: 48px;
+    }
+    
+    .nav-link {
+        min-height: 48px;
+    }
+    
+    /* Améliorer le feedback tactile */
+    .btn:active {
+        opacity: 0.8;
+    }
+    
+    .nav-link:active {
+        background: var(--color-background);
+    }
+    
+    /* Scrolling momentum iOS */
+    .table-container,
+    .modal-body,
+    .nav-menu {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Éviter le zoom sur input focus iOS */
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Bordures plus fines sur écrans haute densité */
+    .btn,
+    .form-control,
+    .modal-content {
+        border-width: 0.5px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .main-nav,
+    .nav-toggle,
+    .btn,
+    .filters-panel,
+    .toast-container {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin: 0;
+    }
+    
+    .page {
+        padding: 0;
+    }
+    
+    .data-table {
+        border: 1px solid #000;
+    }
+    
+    .metric-card {
+        break-inside: avoid;
+    }
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: #0f172a;
+        --color-surface: #1e293b;
+        --color-text: #f1f5f9;
+        --color-text-light: #94a3b8;
+        --color-border: #334155;
+    }
+    
+    .login-container {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+    
+    input,
+    select,
+    textarea {
+        background: var(--color-background);
+        color: var(--color-text);
+    }
+}

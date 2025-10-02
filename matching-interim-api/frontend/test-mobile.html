@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Test Mobile/Tablette - Matching Intérim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .test-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .test-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 10px 0;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 48px;
+        }
+        
+        .test-button:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+        
+        .test-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 10px 0;
+            min-height: 48px;
+        }
+        
+        .test-slider {
+            width: 100%;
+            height: 8px;
+            margin: 20px 0;
+            -webkit-appearance: none;
+            background: #e5e7eb;
+            border-radius: 4px;
+        }
+        
+        .test-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 32px;
+            height: 32px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .info-item strong {
+            color: #667eea;
+        }
+        
+        .test-checkbox {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+        
+        .success { color: #10b981; }
+        .warning { color: #f59e0b; }
+        .error { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Test Interface Mobile/Tablette</h1>
+        
+        <div class="test-card">
+            <div class="test-title">📱 Informations Appareil</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Largeur:</strong>
+                    <span id="screen-width">-</span>
+                </div>
+                <div class="info-item">
+                    <strong>Hauteur:</strong>
+                    <span id="screen-height">-</span>
+                </div>
+                <div class="info-item">
+                    <strong>Ratio:</strong>
+                    <span id="pixel-ratio">-</span>
+                </div>
+                <div class="info-item">
+                    <strong>Touch:</strong>
+                    <span id="touch-support">-</span>
+                </div>
+                <div class="info-item">
+                    <strong>Orientation:</strong>
+                    <span id="orientation">-</span>
+                </div>
+                <div class="info-item">
+                    <strong>Type:</strong>
+                    <span id="device-type">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">👆 Test Zones Tactiles (44x44px minimum)</div>
+            <button class="test-button" onclick="testClick(this)">
+                Bouton Standard (48px)
+            </button>
+            <button class="test-button" style="min-height: 44px; font-size: 14px;" onclick="testClick(this)">
+                Bouton Minimum (44px)
+            </button>
+            <button class="test-button" style="min-height: 64px; font-size: 20px;" onclick="testClick(this)">
+                Bouton Large (64px)
+            </button>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">⌨️ Test Inputs (pas de zoom iOS)</div>
+            <input type="email" class="test-input" placeholder="Email (font-size: 16px)">
+            <input type="password" class="test-input" placeholder="Mot de passe">
+            <input type="number" class="test-input" placeholder="Nombre" pattern="[0-9]*">
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">🎚️ Test Slider Tactile</div>
+            <input type="range" class="test-slider" min="0" max="100" value="50" onchange="updateSlider(this)">
+            <div>Valeur: <span id="slider-value">50</span>%</div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">☑️ Test Checkbox</div>
+            <label class="checkbox-label">
+                <input type="checkbox" class="test-checkbox">
+                <span>Option 1 - Zone tactile étendue</span>
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" class="test-checkbox">
+                <span>Option 2 - Facile à toucher</span>
+            </label>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">📊 Test Responsive</div>
+            <div id="responsive-info">-</div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">🎯 Résultats des Tests</div>
+            <div id="test-results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Informations appareil
+        function updateDeviceInfo() {
+            document.getElementById('screen-width').textContent = window.innerWidth + 'px';
+            document.getElementById('screen-height').textContent = window.innerHeight + 'px';
+            document.getElementById('pixel-ratio').textContent = window.devicePixelRatio || 1;
+            
+            const touchSupport = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            document.getElementById('touch-support').textContent = touchSupport ? '✅ Oui' : '❌ Non';
+            
+            const orientation = window.innerWidth > window.innerHeight ? 'Paysage' : 'Portrait';
+            document.getElementById('orientation').textContent = orientation;
+            
+            let deviceType = 'Desktop';
+            if (window.innerWidth <= 480) deviceType = 'Mobile';
+            else if (window.innerWidth <= 1024) deviceType = 'Tablette';
+            document.getElementById('device-type').textContent = deviceType;
+            
+            updateResponsiveInfo();
+            runTests();
+        }
+
+        // Test responsive
+        function updateResponsiveInfo() {
+            const width = window.innerWidth;
+            let info = '';
+            
+            if (width <= 480) {
+                info = '<span class="warning">📱 Mobile Small (320-480px)</span>';
+            } else if (width <= 768) {
+                info = '<span class="success">📱 Mobile Large (480-768px)</span>';
+            } else if (width <= 1024) {
+                info = '<span class="success">📱 Tablette (768-1024px)</span>';
+            } else {
+                info = '<span>🖥️ Desktop (>1024px)</span>';
+            }
+            
+            document.getElementById('responsive-info').innerHTML = info;
+        }
+
+        // Test click
+        function testClick(button) {
+            button.style.background = '#10b981';
+            button.textContent = '✅ Cliqué !';
+            setTimeout(() => {
+                button.style.background = '#667eea';
+                button.textContent = button.textContent.replace('✅ Cliqué !', 'Bouton');
+            }, 500);
+        }
+
+        // Update slider
+        function updateSlider(slider) {
+            document.getElementById('slider-value').textContent = slider.value;
+        }
+
+        // Run tests
+        function runTests() {
+            const results = [];
+            const width = window.innerWidth;
+            
+            // Test 1: Taille écran
+            if (width >= 768 && width <= 1024) {
+                results.push('<div class="success">✅ Taille tablette optimale</div>');
+            } else if (width >= 320 && width < 768) {
+                results.push('<div class="success">✅ Taille mobile supportée</div>');
+            } else {
+                results.push('<div class="warning">⚠️ Taille desktop détectée</div>');
+            }
+            
+            // Test 2: Touch support
+            if ('ontouchstart' in window) {
+                results.push('<div class="success">✅ Support tactile détecté</div>');
+            } else {
+                results.push('<div class="warning">⚠️ Pas de support tactile</div>');
+            }
+            
+            // Test 3: Viewport
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport && viewport.content.includes('width=device-width')) {
+                results.push('<div class="success">✅ Viewport mobile configuré</div>');
+            } else {
+                results.push('<div class="error">❌ Viewport non optimisé</div>');
+            }
+            
+            // Test 4: Performance
+            if (window.devicePixelRatio >= 2) {
+                results.push('<div class="success">✅ Écran haute résolution</div>');
+            }
+            
+            document.getElementById('test-results').innerHTML = results.join('');
+        }
+
+        // Init
+        updateDeviceInfo();
+        window.addEventListener('resize', updateDeviceInfo);
+        window.addEventListener('orientationchange', updateDeviceInfo);
+    </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Matching Intérim Pro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Page Login -->
+    <div id="login-page" class="page active">
+        <div class="login-container">
+            <div class="login-card">
+                <h1 class="app-title">Matching Intérim Pro</h1>
+                <form id="login-form" class="form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required 
+                               placeholder="email@entreprise.com"
+                               autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required 
+                               placeholder="••••••••"
+                               autocomplete="current-password">
+                    </div>
+                    <div id="login-error" class="error-message"></div>
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <span class="btn-text">Se connecter</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation (visible après login) -->
+    <nav id="main-nav" class="main-nav hidden">
+        <div class="nav-header">
+            <h2 class="nav-title">Matching Pro</h2>
+            <button class="nav-toggle" id="nav-toggle">☰</button>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#" data-page="dashboard" class="nav-link active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Tableau de bord</span>
+            </a></li>
+            <li><a href="#" data-page="upload" class="nav-link">
+                <span class="nav-icon">📤</span>
+                <span class="nav-text">Upload données</span>
+            </a></li>
+            <li><a href="#" data-page="matching" class="nav-link">
+                <span class="nav-icon">🎯</span>
+                <span class="nav-text">Matching</span>
+            </a></li>
+            <li><a href="#" data-page="results" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Résultats</span>
+            </a></li>
+        </ul>
+        <div class="nav-footer">
+            <div class="user-info">
+                <span id="user-email">-</span>
+            </div>
+            <button id="logout-btn" class="btn btn-secondary btn-small">
+                Déconnexion
+            </button>
+        </div>
+    </nav>
+
+    <!-- Container principal pour les pages -->
+    <main id="main-content" class="main-content hidden">
+        
+        <!-- Dashboard -->
+        <div id="dashboard-page" class="page">
+            <header class="page-header">
+                <h1>Tableau de bord</h1>
+                <span class="page-subtitle" id="welcome-message">Bienvenue</span>
+            </header>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-candidats">0</div>
+                    <div class="metric-label">Candidats actifs</div>
+                    <div class="metric-trend">↑ +12% ce mois</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-besoins">0</div>
+                    <div class="metric-label">Besoins ouverts</div>
+                    <div class="metric-trend">↓ -5% ce mois</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-matchings">0</div>
+                    <div class="metric-label">Matchings effectués</div>
+                    <div class="metric-trend">↑ +23% ce mois</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-success">0%</div>
+                    <div class="metric-label">Taux de succès</div>
+                    <div class="metric-trend">→ stable</div>
+                </div>
+            </div>
+
+            <section class="section">
+                <h2 class="section-title">Derniers matchings</h2>
+                <div class="table-container">
+                    <table class="data-table" id="recent-matchings">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Poste</th>
+                                <th>Candidats</th>
+                                <th>Meilleur score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rempli dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary btn-large" onclick="app.navigateTo('upload')">
+                    <span class="btn-icon">📤</span>
+                    Importer des données
+                </button>
+                <button class="btn btn-primary btn-large" onclick="app.navigateTo('matching')">
+                    <span class="btn-icon">🎯</span>
+                    Nouveau matching
+                </button>
+            </div>
+        </div>
+
+        <!-- Upload -->
+        <div id="upload-page" class="page hidden">
+            <header class="page-header">
+                <h1>Import de données</h1>
+                <span class="page-subtitle">Importez vos fichiers candidats et besoins</span>
+            </header>
+
+            <div class="upload-grid">
+                <div class="upload-section">
+                    <h2>Fichier Candidats</h2>
+                    <div class="dropzone" id="dropzone-candidats">
+                        <input type="file" id="file-candidats" accept=".csv,.xlsx,.xls" hidden>
+                        <div class="dropzone-content">
+                            <div class="dropzone-icon">📁</div>
+                            <p class="dropzone-text">
+                                Glissez votre fichier ici<br>
+                                ou <span class="link">parcourir</span>
+                            </p>
+                            <p class="dropzone-hint">CSV ou Excel acceptés</p>
+                        </div>
+                        <div class="file-preview hidden" id="preview-candidats">
+                            <span class="file-name"></span>
+                            <button class="btn-remove">×</button>
+                        </div>
+                    </div>
+                    <div class="upload-status" id="status-candidats"></div>
+                </div>
+
+                <div class="upload-section">
+                    <h2>Fichier Besoins</h2>
+                    <div class="dropzone" id="dropzone-besoins">
+                        <input type="file" id="file-besoins" accept=".csv,.xlsx,.xls" hidden>
+                        <div class="dropzone-content">
+                            <div class="dropzone-icon">📁</div>
+                            <p class="dropzone-text">
+                                Glissez votre fichier ici<br>
+                                ou <span class="link">parcourir</span>
+                            </p>
+                            <p class="dropzone-hint">CSV ou Excel acceptés</p>
+                        </div>
+                        <div class="file-preview hidden" id="preview-besoins">
+                            <span class="file-name"></span>
+                            <button class="btn-remove">×</button>
+                        </div>
+                    </div>
+                    <div class="upload-status" id="status-besoins"></div>
+                </div>
+            </div>
+
+            <div class="data-preview hidden" id="data-preview">
+                <h3>Aperçu des données</h3>
+                <div class="preview-tabs">
+                    <button class="tab-button active" data-tab="candidats">Candidats</button>
+                    <button class="tab-button" data-tab="besoins">Besoins</button>
+                </div>
+                <div class="preview-content">
+                    <div id="preview-table-candidats" class="preview-table active"></div>
+                    <div id="preview-table-besoins" class="preview-table hidden"></div>
+                </div>
+            </div>
+
+            <div class="upload-actions">
+                <button class="btn btn-secondary btn-large" id="btn-reset-upload">
+                    Réinitialiser
+                </button>
+                <button class="btn btn-primary btn-large" id="btn-upload" disabled>
+                    <span class="btn-icon">☁️</span>
+                    Envoyer les fichiers
+                </button>
+            </div>
+        </div>
+
+        <!-- Configuration Matching -->
+        <div id="matching-page" class="page hidden">
+            <header class="page-header">
+                <h1>Configuration du matching</h1>
+                <span class="page-subtitle">Ajustez les paramètres pour optimiser les résultats</span>
+            </header>
+
+            <div class="config-form">
+                <div class="config-section">
+                    <h2>Sélection du besoin</h2>
+                    <div class="form-group">
+                        <label for="select-besoin">Besoin à traiter</label>
+                        <select id="select-besoin" class="form-control">
+                            <option value="">Tous les besoins ouverts</option>
+                            <!-- Options ajoutées dynamiquement -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h2>Paramètres de matching</h2>
+                    
+                    <div class="slider-group">
+                        <label>
+                            Score minimum
+                            <span class="slider-value" id="score-min-value">40%</span>
+                        </label>
+                        <input type="range" id="score-min" min="0" max="100" value="40" 
+                               class="slider">
+                        <div class="slider-labels">
+                            <span>0%</span>
+                            <span>50%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+
+                    <div class="slider-group">
+                        <label>
+                            Nombre de candidats par poste
+                            <span class="slider-value" id="nb-candidats-value">5</span>
+                        </label>
+                        <input type="range" id="nb-candidats" min="1" max="20" value="5" 
+                               class="slider">
+                        <div class="slider-labels">
+                            <span>1</span>
+                            <span>10</span>
+                            <span>20</span>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="use-ai">
+                            <span class="checkbox-text">Utiliser l'IA pour affiner les résultats</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="matching-actions">
+                    <button class="btn btn-secondary btn-large" id="btn-preview-matching">
+                        Aperçu
+                    </button>
+                    <button class="btn btn-primary btn-large btn-cta" id="btn-run-matching">
+                        <span class="btn-icon">🚀</span>
+                        <span class="btn-text">Lancer le matching</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </div>
+
+                <div class="progress-container hidden" id="matching-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">Préparation...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Résultats -->
+        <div id="results-page" class="page hidden">
+            <header class="page-header">
+                <h1>Résultats du matching</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="btn-filter-toggle">
+                        <span class="btn-icon">🔽</span>
+                        Filtres
+                    </button>
+                    <button class="btn btn-primary" id="btn-export">
+                        <span class="btn-icon">📥</span>
+                        Export Excel
+                    </button>
+                </div>
+            </header>
+
+            <div class="filters-panel" id="filters-panel">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label>Score minimum</label>
+                        <select id="filter-score" class="form-control">
+                            <option value="">Tous</option>
+                            <option value="90">90%+</option>
+                            <option value="75">75%+</option>
+                            <option value="50">50%+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Statut</label>
+                        <select id="filter-status" class="form-control">
+                            <option value="">Tous</option>
+                            <option value="excellent">Excellent</option>
+                            <option value="bon">Bon</option>
+                            <option value="moyen">Moyen</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Poste</label>
+                        <select id="filter-poste" class="form-control">
+                            <option value="">Tous</option>
+                            <!-- Options ajoutées dynamiquement -->
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" id="btn-clear-filters">
+                        Réinitialiser
+                    </button>
+                </div>
+            </div>
+
+            <div class="results-summary">
+                <div class="summary-item">
+                    <span class="summary-label">Total matchings:</span>
+                    <span class="summary-value" id="total-matchings">0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Score moyen:</span>
+                    <span class="summary-value" id="avg-score">0%</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table results-table" id="results-table">
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Candidat</th>
+                            <th>Poste</th>
+                            <th>Score</th>
+                            <th>Statut</th>
+                            <th>Contact</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rempli dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- Généré dynamiquement -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Détail Candidat -->
+    <div id="candidate-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-candidate-name">-</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="candidate-info">
+                    <div class="info-section">
+                        <h3>Informations générales</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Score:</span>
+                                <span class="info-value" id="modal-score">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Expérience:</span>
+                                <span class="info-value" id="modal-experience">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Disponibilité:</span>
+                                <span class="info-value" id="modal-availability">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Localisation:</span>
+                                <span class="info-value" id="modal-location">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>Analyse des compétences</h3>
+                        <div class="skills-analysis" id="modal-skills">
+                            <!-- Généré dynamiquement -->
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>Points forts / Points faibles</h3>
+                        <div class="analysis-grid">
+                            <div class="analysis-column">
+                                <h4 class="text-success">Points forts</h4>
+                                <ul id="modal-strengths"></ul>
+                            </div>
+                            <div class="analysis-column">
+                                <h4 class="text-warning">Points d'attention</h4>
+                                <ul id="modal-weaknesses"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-contact-email">
+                    <span class="btn-icon">📧</span>
+                    Envoyer un email
+                </button>
+                <button class="btn btn-primary" id="modal-contact-phone">
+                    <span class="btn-icon">📞</span>
+                    Appeler
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/matching.js"></script>
+    <script src="js/results.js"></script>
+</body>
+</html>

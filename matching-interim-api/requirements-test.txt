@@ -1,0 +1,51 @@
+# requirements-test.txt
+# Dépendances pour les tests et le développement
+
+# Framework de test
+pytest==7.4.4
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+pytest-timeout==2.2.0
+pytest-xdist==3.5.0  # Tests parallèles
+pytest-mock==3.12.0
+pytest-env==1.1.3
+
+# Client HTTP pour tests API
+httpx==0.26.0
+requests==2.31.0
+aiohttp==3.9.1
+
+# Test de charge
+locust==2.20.0  # Alternative à notre script custom
+aiofiles==23.2.1
+
+# Mocking et fixtures
+faker==22.0.0
+factory-boy==3.3.0
+freezegun==1.4.0  # Mock du temps
+
+# Analyse de code et qualité
+black==24.1.0
+flake8==7.0.0
+pylint==3.0.3
+mypy==1.8.0
+bandit==1.7.6  # Sécurité
+
+# Coverage et reporting
+coverage==7.4.0
+coverage-badge==1.1.0
+pytest-html==4.1.1
+
+# Monitoring et métriques
+psutil==5.9.8
+prometheus-client==0.19.0
+memory-profiler==0.61.0
+
+# Base de données de test
+testcontainers==3.7.1  # Conteneurs Docker pour tests
+alembic==1.13.1
+
+# Utilitaires
+python-dotenv==1.0.0
+rich==13.7.0  # Pretty print pour debug
+tabulate==0.9.0  # Tableaux formatés
